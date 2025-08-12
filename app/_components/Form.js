@@ -4,6 +4,7 @@ import Button from "./Button";
 import Input from "./Input.js";
 import Select from "./Select";
 import toast from "react-hot-toast";
+import { format } from "date-fns";
 
 function Form({ selected, type, action, userId, close, text, data }) {
   if (type === "post")
@@ -54,7 +55,7 @@ function Form({ selected, type, action, userId, close, text, data }) {
         <input
           type="hidden"
           name="eventDate"
-          value={selected ? selected.toLocaleDateString() : "01/01/1970"}
+          value={selected ? format(selected, "dd/MM/yyyy") : "01/01/1970"}
         />
         <div className="flex justify-center gap-14 items-center">
           <div className="flex items-center gap-2">

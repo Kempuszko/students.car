@@ -2,6 +2,7 @@ import IncomingEventsList from "@/app/_components/IncomingEventsList";
 import Post from "@/app/_components/Post";
 import { auth } from "@/app/_lib/auth";
 import { getLatestPost, getTodayEvents } from "@/app/_lib/data-service";
+import { format } from "date-fns";
 
 export const metadata = {
   title: "Strona glowna",
@@ -9,10 +10,8 @@ export const metadata = {
 };
 
 async function page() {
-  const today = new Date(new Date().setHours(0, 0, 0, 0)).toLocaleDateString();
-  const tomorrow = new Date(
-    new Date().setHours(24, 0, 0, 0)
-  ).toLocaleDateString();
+  const today = format(new Date().setHours(0, 0, 0, 0), "dd/MM/yyyy");
+  const tomorrow = format(new Date().setHours(24, 0, 0, 0), "dd/MM/yyyy");
 
   const [incomingEvents, latestPost, session] = await Promise.all([
     getTodayEvents(today, tomorrow),
