@@ -1,17 +1,13 @@
-import AppHeader from "@/app/_components/AppHeader";
 import AppNav from "../_components/AppNav";
-import CustomToast from "../_components/CustomToast";
 
 export const metadata = {
-  title: { template: "%s / SPK", default: "App / SPK" },
+  title: { template: "%s | Studends.car", default: "App | Students.car" },
 };
 
 function layout({ children }) {
   return (
-    <div className="flex flex-col h-screen ">
-      <CustomToast />
-      <AppHeader />
-      <main className="2xs:flex 2xs:flex-col xl:grid xl:grid-cols-[17rem_auto] h-full">
+    <div className="h-screen ">
+      <main className="flex flex-col h-full w-full">
         <AppNav />
         {children}
       </main>

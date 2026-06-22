@@ -1,9 +1,17 @@
+import Link from "next/link";
+import Image from "next/image";
+
 function Logo() {
   return (
     <div className="z-10 ">
-      <span className="font-semibold underline 2xs:text-xl xs:text-2xl sm:text-3xl xl:text-4xl">
-        SPK
-      </span>
+      <Link href="/">
+        <Image
+          width={90}
+          height={90}
+          src="/logo.png"
+          alt="logo of studends.car"
+        ></Image>
+      </Link>
     </div>
   );
 }

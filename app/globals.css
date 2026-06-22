@@ -1,10 +1,60 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
   --breakpoint-2xs: 15rem;
   --breakpoint-xs: 30rem;
+
+  --color-background: #0f0f10;
+  --color-surface: #18181b;
+  --color-surfaceHover: #222226;
+  --color-surfaceTransparent: rgba(24, 24, 27, 0.8);
+
+  --color-gold: #c8a96b;
+  --color-gold-light: #e0c58a;
+  --color-gold-dark: #9b7b3e;
+
+  --color-text: #f5f5f5;
+  --color-text-muted: #a1a1aa;
+
+  --color-border: rgba(200, 169, 107, 0.15);
+}
+
+@layer base {
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #141414;
+    border: 1px solid #9b7b3e;
+    border-radius: 0.25rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  input[type="checkbox"]:hover {
+    border-color: #c8a96b;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: #c8a96b;
+    border-color: #c8a96b;
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #0f0f10;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
 }
 
 @layer components {
@@ -16,39 +66,52 @@
     animation: rotate 1s infinite linear;
   }
 
-  .spinner-mini {
-    margin: 0;
-    width: 20px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    /* border: 2px solid theme("colors.primary.200"); */
-    border-right-color: transparent;
-    animation: rotate 1s infinite linear;
+  .hiperlink:link,
+  .hiperlink:visited {
+    background-color: #2b2c2a;
+    border: 0.1rem solid #9b860f;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .hiperlink:hover {
+    border: 0.1rem solid #fdd812;
   }
 
-  .animate-enter {
-    animation: enter 400ms;
+  .custom-scroll::-webkit-scrollbar {
+    width: 1rem;
   }
 
-  .animate-leave {
-    animation: leave 1.1s;
+  .custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: #96810d;
+    border-radius: 9999px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #fdd812;
   }
 
   @keyframes enter {
     0% {
-      transform: translateX(150%);
+      transform: translateY(0%);
     }
     100% {
-      transform: translateX(0%);
+      transform: translateY(150%);
     }
   }
 
   @keyframes leave {
     0% {
-      transform: translateX(0%);
+      transform: translateY(150%);
     }
     100% {
-      transform: translateX(150%);
+      transform: translateY(0%);
     }
   }
 
@@ -59,4 +122,14 @@
   }
 }
 
-@layer darkmode;
+.rdp-nav .rdp-chevron {
+  stroke: #9b7b3e !important;
+  fill: #9b7b3e !important;
+  transition: all !important;
+  transition-duration: 150ms !important;
+}
+
+.rdp-nav .rdp-chevron:hover {
+  stroke: #e0c58a !important;
+  fill: #e0c58a !important;
+}

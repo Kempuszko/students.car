@@ -1,53 +1,51 @@
 "use client";
-import {
-  HiArchiveBox,
-  HiMiniCalendar,
-  HiHome,
-  HiSquare2Stack,
-  HiXMark,
-} from "react-icons/hi2";
 import NavLink from "./NavLink";
+import Logo from "./Logo";
+import { GoPeople } from "react-icons/go";
+import { IoCarSportOutline } from "react-icons/io5";
+import { VscSymbolRuler } from "react-icons/vsc";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 const navLinks = [
-  { name: "Strona główna", href: "/application/dashboard", icon: <HiHome /> },
   {
-    name: "Kalendarz",
-    href: "/application/calendar",
-    icon: <HiMiniCalendar />,
+    name: "Nasze Auta",
+    href: "/application/cars",
+    icon: <IoCarSportOutline className="w-6 h-6" />,
   },
-  { name: "Posty", href: "/application/posts", icon: <HiSquare2Stack /> },
-  { name: "Pliki", href: "/application/files", icon: <HiArchiveBox /> },
+  {
+    name: "O nas",
+    href: "/application/aboutUs",
+    icon: <GoPeople className="w-6 h-6" />,
+  },
+  {
+    name: "Regulamin",
+    href: "/application/rules",
+    icon: <VscSymbolRuler className="w-6 h-6" />,
+  },
+  {
+    name: "FAQ",
+    href: "/application/faq",
+    icon: <AiOutlineQuestionCircle className="w-6 h-6" />,
+  },
 ];
-const mobileNav =
-  "2xs:fixed 2xs:top-0 2xs:left-0 2xs:w-full 2xs:flex 2xs:h-full 2xs:justify-center 2xs:items-center 2xs:bg-[rgb(229,231,235,0.3)] 2xs:dark:bg-[rgba(0,0,0,0.3)] 2xs:backdrop-blur-sm z-20 xl:static xl:justify-start xl:items-start xl:bg-gray-100 xl:dark:bg-gray-900 invisible xl:visible xl:w-fit transition-colors";
 
 function AppNav() {
-  function handleNav() {
-    document.querySelector(".mobileNav").classList.add("invisible");
-  }
-
   return (
     <>
       <ul
-        className={`${mobileNav} xl:border-r border-gray-200 py-4 px-6 dark:border-gray-800 mobileNav xl:py-8 2xl:py-12`}
+        className={`xl:border-b border-gold-dark py-4 px-12   w-full flex justify-between sticky top-0 bg-background   p-4 shadow z-100]`}
       >
-        <div className="flex flex-col 2xs:gap-8">
-          <button
-            className="xl:hidden absolute right-0 top-0 m-4 transition-[background-color,_box-shadow] rounded-md focus:ring-4 dark:ring-blue-800 outline-none focus:outline-none ring-amber-400"
-            onClick={handleNav}
-          >
-            <HiXMark className="w-8 h-8" />
-          </button>
+        <Logo />
+        <li className="flex gap-4">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
-              name={link.name}
+              text={link.name}
               href={link.href}
               icon={link.icon}
-              onClick={handleNav}
             />
           ))}
-        </div>
+        </li>
       </ul>
     </>
   );
