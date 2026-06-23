@@ -14,7 +14,7 @@ export const metadata = {
   description: "About us section",
 };
 
-const testData = [{ src: "/FiatPunto.png" }, { src: "/bugatti.png" }];
+const testData = [{ src: "/FiatPunto.png" }, { src: "/BugattiChiron.png" }];
 
 async function page() {
   return (
