@@ -2,19 +2,15 @@ import H1 from "@/app/_components/H1";
 import H2 from "@/app/_components/H2";
 import Ul from "@/app/_components/Ul";
 import Container from "@/app/_components/Container";
-import CarShowCase from "@/app/_components/CarShowCase";
+import IconText from "@/app/_components/IconText";
 import { CiFacebook, CiMail } from "react-icons/ci";
 import { MdOutlinePhone } from "react-icons/md";
-import IconText from "@/app/_components/IconText";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
-import { getCars } from "@/app/dataProvider/data";
 
 export const metadata = {
   title: "O nas",
   description: "About us section",
 };
-
-const testData = [{ src: "/FiatPunto.png" }, { src: "/BugattiChiron.png" }];
 
 async function page() {
   return (
@@ -32,7 +28,6 @@ async function page() {
         poczuć przeciążenie 1,5 G i usłyszeć ryk 1500 koni mechanicznych? Tak,
         Bugatti Chiron też na Ciebie czeka
       </span>
-      <CarShowCase cars={testData} />
       <Ul>
         <H2>Co nas wyróżnia?</H2>
         <li>

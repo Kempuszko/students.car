@@ -3,17 +3,16 @@ import Container from "@/app/_components/Container";
 import H1 from "@/app/_components/H1";
 import CarShowCase from "@/app/_components/CarShowCase";
 import DateSelector from "@/app/_components/DateSelector";
-import H2 from "@/app/_components/H2";
 import TechnicalInformationList from "@/app/_components/TechnicalInformationList";
+import { BookingProvider } from "@/app/_context/BookingContext";
+import Form from "@/app/_components/Form";
+import { getCar, getBookedDates } from "@/app/dataProvider/data";
 import {
   LuCpu,
   LuLuggage,
   LuSmartphoneNfc,
   LuFileCheck2,
 } from "react-icons/lu";
-import { BookingProvider } from "@/app/_context/BookingContext";
-import Form from "@/app/_components/Form";
-import { getCar, getBookedDates } from "@/app/dataProvider/data";
 
 export default async function CarDetailPage({ params }) {
   const paramsCarId = await params;
@@ -22,8 +21,8 @@ export default async function CarDetailPage({ params }) {
     getBookedDates(paramsCarId.carId),
   ]);
 
-  if (!car) {
-    notFound(); // Next.js automatycznie pokaże stronę 404
+  if (!car.id) {
+    notFound();
   }
 
   return (

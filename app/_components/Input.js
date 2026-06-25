@@ -6,6 +6,9 @@ function Input({
   name = "",
   required = false,
   onChange,
+  maxLength = 50,
+  inputMode,
+  pattern,
 }) {
   const commonStyles =
     "mx-auto bg-background px-4 py-2 border border-gold-dark rounded-2xl placeholder-gray-700 transition-[background-color,_box-shadow,_border] w-full";
@@ -20,6 +23,9 @@ function Input({
       name={name}
       required={required}
       onChange={onChange}
+      maxLength={maxLength}
+      inputMode={inputMode}
+      pattern={pattern}
     />
   );
 }

@@ -1,6 +1,5 @@
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaTiktok } from "react-icons/fa";
 import { CiFacebook } from "react-icons/ci";
-import { FaTiktok } from "react-icons/fa";
 import IconText from "./IconText";
 
 function Footer({}) {

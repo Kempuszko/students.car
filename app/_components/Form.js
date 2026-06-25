@@ -1,17 +1,14 @@
 "use client";
-import { useState } from "react";
-import { useBooking } from "../_context/BookingContext";
-import Input from "./Input";
+import { useState, useEffect, useActionState } from "react";
 import Link from "next/link";
-import H2 from "./H2";
-import { calcRangeToDays } from "../_helpers/helperFunctions";
-import H3 from "./H3";
-import H1 from "./H1";
-import { useActionState } from "react";
-import { addReservation } from "../dataProvider/data";
-import CustomToast from "./CustomToast";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import Input from "./Input";
+import H1 from "./H1";
+import H2 from "./H2";
+import H3 from "./H3";
+import { useBooking } from "../_context/BookingContext";
+import { calcRangeToDays } from "../_helpers/helperFunctions";
+import { addReservation } from "../dataProvider/data";
 
 function Form({ rentPrice, deposit, carId }) {
   const { range, setRange } = useBooking();
@@ -39,7 +36,7 @@ function Form({ rentPrice, deposit, carId }) {
       toast.success("Pomyślnie zarezerwowano!");
       setRange(null);
     } else if (state.success === false) {
-      toast.success("Rezerwacja nie udała się");
+      toast.error("Rezerwacja nie udała się");
     }
   }, [state.timestamp]);
 
@@ -55,30 +52,40 @@ function Form({ rentPrice, deposit, carId }) {
           name="name"
           required={true}
         />
+        <Input type="email" placeholder="E-mail" name="email" required={true} />
         <Input
-          type="E-mail"
-          placeholder="E-mail"
-          name="email"
-          required={true}
-        />
-        <Input
-          type="tel"
+          type="text"
           placeholder="Numer Telefonu"
           name="phoneNumber"
           required={true}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          maxLength="9"
         />
-        <Input type="text" placeholder="PESEL" name="pesel" required={true} />
+        <Input
+          type="text"
+          placeholder="PESEL"
+          name="pesel"
+          required={true}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          maxLength="11"
+        />
         <Input
           type="text"
           placeholder="Numer Prawa Jazdy"
           name="drivesLicenseNumber"
           required={true}
+          maxLength="9"
         />
         <Input
           type="text"
           placeholder="Numer Legitymacji Studenckiej"
           name="studentIdNumber"
           onChange={(e) => setStudentId(e.target.value)}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          maxLength="11"
         />
         <input
           type="hidden"

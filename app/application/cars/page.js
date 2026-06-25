@@ -1,15 +1,12 @@
+import Image from "next/image";
 import Container from "@/app/_components/Container";
 import H1 from "@/app/_components/H1";
 import IconText from "@/app/_components/IconText";
-import { IoCarSportOutline } from "react-icons/io5";
-import { BsCash } from "react-icons/bs";
 import NavLink from "@/app/_components/NavLink";
-import Image from "next/image";
-import { FaGasPump } from "react-icons/fa6";
-import { FaGear } from "react-icons/fa6";
-import { FaPeopleGroup } from "react-icons/fa6";
-import { FaDroplet } from "react-icons/fa6";
 import { getCars } from "@/app/dataProvider/data";
+import { BsCash } from "react-icons/bs";
+import { FaGasPump, FaGear, FaPeopleGroup, FaDroplet } from "react-icons/fa6";
+import { IoCarSportOutline } from "react-icons/io5";
 
 export const metadata = {
   title: "Nasze auta",
@@ -41,7 +38,7 @@ async function page() {
                     icon={<FaGear className="w-8 h-8 text-gold" />}
                     text={
                       car.technical
-                        .at(2)
+                        .find((item) => item.includes("Skrzynia"))
                         ?.match(/(Manualna|Automatyczna)/)?.[1] || "Brak danych"
                     }
                     size="small"
