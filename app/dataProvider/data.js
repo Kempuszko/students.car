@@ -217,6 +217,8 @@ export async function addReservation(range, prevState, formData) {
     ]);
 
     revalidatePath("/application/calendar");
+    revalidatePath("/application/cars");
+    revalidatePath("/");
 
     return {
       success: true,
@@ -295,6 +297,9 @@ export async function updateCar(prevState, formData) {
     );
 
     revalidatePath("/application/admin");
+    revalidatePath("/application/cars");
+    revalidatePath("/");
+
     return { success: true, message: "Pomyślnie Zedytowano!" };
   } catch (error) {
     return { success: false, message: error.message };
@@ -309,6 +314,9 @@ export async function deleteCar(prevState, formData) {
     await query(`DELETE FROM cars WHERE id = ?`, [id]);
 
     revalidatePath("/application/admin");
+    revalidatePath("/application/cars");
+    revalidatePath("/");
+
     return { success: true, message: "Pomyślnie usunięto!" };
   } catch (error) {
     return { success: false, message: error.message };
@@ -336,6 +344,7 @@ export async function updateReservation(prevState, formData) {
     );
 
     revalidatePath("/application/admin");
+
     return { success: true, message: "Pomyślnie Zedytowano!" };
   } catch (error) {
     return { success: false, message: error.message };
@@ -349,6 +358,8 @@ export async function deleteReservation(prevState, formData) {
     await query(`DELETE FROM reservations WHERE id = ?`, [id]);
 
     revalidatePath("/application/admin");
+    revalidatePath("/application/cars");
+
     return { success: true, message: "Pomyślnie usunięto!" };
   } catch (error) {
     return { success: false, message: error.message };
