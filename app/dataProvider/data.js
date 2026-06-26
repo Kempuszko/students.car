@@ -129,6 +129,33 @@ export async function getReservations() {
   }
 }
 
+export async function getUserReservations(ids) {
+  const placeholders = ids.map(() => "?").join(", ");
+
+  try {
+    const reservations = await query(
+      `SELECT r.id, c.name as car_name, r.name as client_name, r.email, r.phone_number, r.pesel, r.drivers_license_number, r.student_id_number, r.total_price, r.date_from, r.date_to FROM reservations as r JOIN cars as c on r.car_id = c.id WHERE r.id IN (${placeholders})`,
+      ids,
+    );
+
+    return reservations.map((reservation) => ({
+      id: reservation.id.toString(),
+      carName: reservation.car_name,
+      clientName: reservation.client_name,
+      email: reservation.email,
+      phoneNumber: reservation.phone_number,
+      pesel: reservation.pesel,
+      driversLicenseNumber: reservation.drivers_license_number,
+      studentIdNumber: reservation.student_id_number,
+      totalPrice: reservation.total_price,
+      dateFrom: reservation.date_from.toLocaleDateString("pl-PL"),
+      dateTo: reservation.date_to.toLocaleDateString("pl-PL"),
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function getCar(carId) {
   try {
     const [carFromDb] = await query(`SELECT * FROM cars WHERE id = ?`, [carId]);
@@ -187,6 +214,18 @@ export async function addReservation(range, prevState, formData) {
   const formattedDateFrom = formatter.format(new Date(data.dateFrom));
   const formattedDateTo = formatter.format(new Date(data.dateTo));
 
+  const cookieStore = await cookies();
+  const existingCookies = cookieStore.get("my_reservations")?.value;
+
+  let reservationIds = [];
+  if (existingCookies) {
+    try {
+      reservationIds = JSON.parse(existingCookies);
+    } catch (e) {
+      reservationIds = [];
+    }
+  }
+
   try {
     const insertQuery = `
       INSERT INTO reservations (
@@ -203,7 +242,7 @@ export async function addReservation(range, prevState, formData) {
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    await query(insertQuery, [
+    const result = await query(insertQuery, [
       data.carId,
       data.name,
       data.email,
@@ -216,7 +255,19 @@ export async function addReservation(range, prevState, formData) {
       formattedDateTo,
     ]);
 
+    if (!reservationIds.includes(result.insertId)) {
+      reservationIds.push(result.insertId);
+    }
+
+    cookieStore.set("my_reservations", JSON.stringify(reservationIds), {
+      httpOnly: true,
+      secure: true,
+      maxAge: 60 * 60 * 24 * 30,
+      path: "/",
+    });
+
     revalidatePath("/application/calendar");
+    revalidatePath("/application/reservation");
     revalidatePath("/application/cars");
     revalidatePath("/");
 
@@ -268,6 +319,8 @@ export async function insertCar(prevState, formData) {
     );
 
     revalidatePath("/application/admin");
+    revalidatePath("/application/cars");
+
     return { success: true, message: "Pomyślnie Dodano!" };
   } catch (error) {
     return { success: false, message: error.message };
@@ -308,7 +361,6 @@ export async function updateCar(prevState, formData) {
 
 export async function deleteCar(prevState, formData) {
   const id = formData.get("id");
-  console.log(id);
 
   try {
     await query(`DELETE FROM cars WHERE id = ?`, [id]);
@@ -325,7 +377,6 @@ export async function deleteCar(prevState, formData) {
 
 export async function updateReservation(prevState, formData) {
   const data = { ...Object.fromEntries(formData.entries()) };
-  console.log(data);
   try {
     await query(
       `UPDATE reservations SET 
@@ -344,6 +395,7 @@ export async function updateReservation(prevState, formData) {
     );
 
     revalidatePath("/application/admin");
+    revalidatePath("/application/reservation");
 
     return { success: true, message: "Pomyślnie Zedytowano!" };
   } catch (error) {
@@ -357,8 +409,35 @@ export async function deleteReservation(prevState, formData) {
   try {
     await query(`DELETE FROM reservations WHERE id = ?`, [id]);
 
+    const cookieStore = await cookies();
+    const existingCookies = cookieStore.get("my_reservations")?.value;
+
+    if (existingCookies) {
+      try {
+        const reservationIds = JSON.parse(existingCookies);
+
+        const updatedIds = reservationIds.filter(
+          (id) => Number(id) !== Number(id),
+        );
+
+        if (updatedIds.length === 0) {
+          cookieStore.delete("my_reservations");
+        } else {
+          cookieStore.set("my_reservations", JSON.stringify(updatedIds), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 24 * 30,
+            path: "/",
+          });
+        }
+      } catch (e) {
+        console.error("Błąd parsowania ciasteczka przy usuwaniu:", e);
+      }
+    }
+
     revalidatePath("/application/admin");
     revalidatePath("/application/cars");
+    revalidatePath("/application/reservation");
 
     return { success: true, message: "Pomyślnie usunięto!" };
   } catch (error) {

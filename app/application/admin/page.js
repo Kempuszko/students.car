@@ -17,7 +17,6 @@ async function page() {
   const cookieStore = await cookies();
   const token = cookieStore.get("admin_session")?.value;
 
-  console.log(token);
   if (!token) {
     redirect("/application/login");
   }

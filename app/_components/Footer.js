@@ -3,6 +3,7 @@ import { CiFacebook } from "react-icons/ci";
 import IconText from "./IconText";
 
 function Footer({}) {
+  const date = new Date();
   return (
     <footer className="w-full h-10 flex flex-col items-center gap-1 p-10 ">
       <div className="flex gap-10 border-t-[0.05rem] border-solid border-gold pt-5">
@@ -38,7 +39,7 @@ function Footer({}) {
         </a>
       </div>
       <span className="text-center">
-        © 2025 Students.car. Wszelkie prawa zastrzeżone.
+        © {date.getFullYear()} Students.car. Wszelkie prawa zastrzeżone.
       </span>
     </footer>
   );

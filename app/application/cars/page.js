@@ -10,7 +10,7 @@ import { IoCarSportOutline } from "react-icons/io5";
 
 export const metadata = {
   title: "Nasze auta",
-  description: "calendar section of SPK app",
+  description: "page of out collection of cars",
 };
 
 async function page() {

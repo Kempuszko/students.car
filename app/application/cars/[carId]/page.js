@@ -14,6 +14,11 @@ import {
   LuFileCheck2,
 } from "react-icons/lu";
 
+export const metadata = {
+  title: "Formularz",
+  description: "Form of car reservation",
+};
+
 export default async function CarDetailPage({ params }) {
   const paramsCarId = await params;
   const [car, bookedDates] = await Promise.all([

@@ -2,11 +2,16 @@
 import NavLink from "./NavLink";
 import Logo from "./Logo";
 import { GoPeople } from "react-icons/go";
-import { IoCarSportOutline } from "react-icons/io5";
+import { IoCarSportOutline, IoDocumentTextOutline } from "react-icons/io5";
 import { VscSymbolRuler } from "react-icons/vsc";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 const navLinks = [
+  {
+    name: "Rezerwacje",
+    href: "/application/reservation",
+    icon: <IoDocumentTextOutline className="w-6 h-6" />,
+  },
   {
     name: "Nasze Auta",
     href: "/application/cars",

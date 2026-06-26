@@ -10,8 +10,6 @@ import { calcRangeToDays } from "../_helpers/helperFunctions";
 function DateSelector({ RentPrice, bookedDates }) {
   const { range, setRange } = useBooking();
 
-  console.log(range);
-
   return (
     <>
       <DayPicker
