@@ -38,7 +38,7 @@ function Form({ rentPrice, deposit, carId }) {
     } else if (state.success === false) {
       toast.error("Rezerwacja nie udała się");
     }
-  }, [setRange, state.timestamp]);
+  }, [state.timestamp, setRange, state.success]);
 
   return (
     <form
